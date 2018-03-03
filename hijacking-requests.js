@@ -27,14 +27,12 @@ fetch('/foo').then(function(response) {
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     fetch('/imgs/dr-evil.gif')
-  );kk
+  );
 });
 
 // How to respond to requests replacing all .jpg images with
 // dr. evil gif using request.url and endswith()
 self.addEventListener('fetch', function(event) {
-  // TODO: only respond to requests with a
-  // url ending in ".jpg"
 
   if (event.request.url.endsWith('.jpg')) {
       event.respondWith(
@@ -50,12 +48,35 @@ self.addEventListener('fetch', function(event) {
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     fetch(event.request).then(function(response) {
-      if(response.status == 404) {
-        return new Response("Whoopsie Do..... not found")
+      if (response.status === 404) {
+        // TODO: instead, respond with the gif at
+        // /imgs/dr-evil.gif
+        // using a network request
+        return new Response("No content dude version 5");
       }
       return response;
     }).catch(function() {
-      return new Response("Oh crap, that really really failed!!")
+      return new Response("You are offline, so I am taking over");
     })
-  )
-})
+  );
+});
+
+// custom 404 response, using service worker to serve/respond with a dr-evil gif
+// Solution:
+// Rather than returning response, return fetch(#imagepath#)
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    fetch(event.request).then(function(response) {
+      if (response.status === 404) {
+        // TODO: instead, respond with the gif at
+        // /imgs/dr-evil.gif
+        // using a network request
+        // return new Response("Whoops, not found");
+        return fetch('/imgs/dr-evil.gif');
+      }
+      return response;
+    }).catch(function() {
+      return new Response("Uh oh, that totally failed!");
+    })
+  );
+});
