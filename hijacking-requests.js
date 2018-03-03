@@ -27,7 +27,7 @@ fetch('/foo').then(function(response) {
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     fetch('/imgs/dr-evil.gif')
-  );
+  );kk
 });
 
 // How to respond to requests replacing all .jpg images with
@@ -42,3 +42,20 @@ self.addEventListener('fetch', function(event) {
       );
     }
 });
+
+// Responding with a network fetch for the request, just like the browser would
+// do, if we left it to its own devices. If URL is invalid you will get a new
+// custom response(line 54) or if connection is down/no internet you will get
+// another custom response(line 58)
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    fetch(event.request).then(function(response) {
+      if(response.status == 404) {
+        return new Response("Whoopsie Do..... not found")
+      }
+      return response;
+    }).catch(function() {
+      return new Response("Oh crap, that really really failed!!")
+    })
+  )
+})
