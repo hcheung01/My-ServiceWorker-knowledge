@@ -36,3 +36,36 @@ cache.match(request);
 caches.match(request);
 // Same as cache.match but tries to find a match in any cache, starting with
 // the oldest
+
+QUIZ: CACHE RESPONSE QUIZ
+
+1. Open/create a cache named 'wittr-static-v1'
+2. Add array of urls name urlsToCache to 'wittr-static-v1'
+
+Answer:
+
+var urlsToCache = [
+  '/',
+  'js/main.js',
+  'css/main.css',
+  'imgs/icon.png',
+  'https://fonts.gstatic.com/s/roboto/v15/2UX7WLTfW3W8TclTUvlFyQ.woff',
+  'https://fonts.gstatic.com/s/roboto/v15/d-6IYplOFocCacKzxwXSOD8E0i7KZn-EPnyo3HZu7kw.woff'
+];
+
+self.addEventListener('install', function(event) {
+  event.waitUntil(
+    // TODO: open a cache named 'wittr-static-v1'
+    // Add cache the urls from urlsToCache
+    caches.open('wittr-static-v1').then(function(cache) {
+      cache.addAll([
+        '/',
+        'js/main.js',
+        'css/main.css',
+        'imgs/icon.png',
+        'https://fonts.gstatic.com/s/roboto/v15/2UX7WLTfW3W8TclTUvlFyQ.woff',
+        'https://fonts.gstatic.com/s/roboto/v15/d-6IYplOFocCacKzxwXSOD8E0i7KZn-EPnyo3HZu7kw.woff'
+      ]);
+    })
+  );
+});

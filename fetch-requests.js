@@ -80,3 +80,12 @@ self.addEventListener('fetch', function(event) {
     })
   );
 });
+
+// New Service Worker event
+//
+// Install Event - When a browser runs a service worker for the first time
+// an event is fired within it, the installed event. The browser won't let
+// this new service worker take control of pages until its install phase is
+// completed, and we're in control of what that involves
+// IMPORTANT: We use it as an opportunity to get everything we need from
+// the network
