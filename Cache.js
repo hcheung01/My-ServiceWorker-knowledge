@@ -34,5 +34,5 @@ cache.match(request);
 // This will return a promise for a matching response if one is found or null
 
 caches.match(request);
-// Same as cache.match but tries to find a match in any cache, starting with
-// the oldest
+// Same as cache.match but tries to find a match in any cache, starting
+// with the oldest

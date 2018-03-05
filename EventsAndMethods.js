@@ -50,4 +50,17 @@ The waitUntil() method must be initially called within the event callback, but a
 Example:
 SYNTAX: event.respondwith()
 
-Method of FetchEvent. Prevents the browsers default fetch handling, and allows you to provide a promise for a Response yourself.
+Method of FetchEvent. Prevents the browsers default fetch handling, and allows you to provide a promise for a Response yourself. Basically tell the browser we will handle it ourselve.
+
+Can have two parameters. First parameter is the body of the response. The second parameter is an object which can also alter the headers of the page.
+
+EXAMPLE:
+
+self.addEventListener('fetch', function(event) {
+
+    event.respondWith(
+      new Response('<strong class="a-winner-is-me">My HTML response!</strong>', {
+        headers: {'Content-Type': 'text/html'}
+      })
+    );
+});
