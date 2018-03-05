@@ -1,6 +1,7 @@
+QUIZZES AND ANSWERS:
 
+1. Respond to all requests with an html response
 
-// Respond to all requests with an html response
 self.addEventListener('fetch', function(event) {
 	// containing an element with class="a-winner-is-me".
 	// Ensure the Content-Type of the response is "text/html"
@@ -11,7 +12,8 @@ self.addEventListener('fetch', function(event) {
     );
 });
 
-// Fetch code for some JSON from URL foo with promises
+2. Fetch code for some JSON from URL foo with promises
+
 fetch('/foo').then(function(response) {
   // to read the JSON response
   return response.json()
@@ -23,15 +25,17 @@ fetch('/foo').then(function(response) {
   console.log('It failed boooooo you need to read more');
 })
 
-// Response with fetching a gif image
+3. Response with fetching a gif image
+
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     fetch('/imgs/dr-evil.gif')
   );
 });
 
-// How to respond to requests replacing all .jpg images with
-// dr. evil gif using request.url and endswith()
+4. Respond to requests replacing all .jpg images with
+   dr. evil gif using request.url and endswith()
+
 self.addEventListener('fetch', function(event) {
 
   if (event.request.url.endsWith('.jpg')) {
@@ -41,10 +45,8 @@ self.addEventListener('fetch', function(event) {
     }
 });
 
-// Responding with a network fetch for the request, just like the browser would
-// do, if we left it to its own devices. If URL is invalid you will get a new
-// custom response(line 54) or if connection is down/no internet you will get
-// another custom response(line 58)
+5. Responding with a network fetch for the request, just like the browser would do, if we left it to its own devices. If URL is invalid you will get a new custom response(line 57) or if connection is down/no internet you will get another custom response(line 61)
+
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     fetch(event.request).then(function(response) {
@@ -61,9 +63,11 @@ self.addEventListener('fetch', function(event) {
   );
 });
 
-// custom 404 response, using service worker to serve/respond with a dr-evil gif
-// Solution:
-// Rather than returning response, return fetch(#imagepath#)
+6. custom 404 response, using service worker to serve/respond with a dr-evil gif
+
+Solution:
+Rather than returning response, return fetch(#imagepath#)
+
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     fetch(event.request).then(function(response) {
@@ -81,11 +85,37 @@ self.addEventListener('fetch', function(event) {
   );
 });
 
-// New Service Worker event
-//
-// Install Event - When a browser runs a service worker for the first time
-// an event is fired within it, the installed event. The browser won't let
-// this new service worker take control of pages until its install phase is
-// completed, and we're in control of what that involves
-// IMPORTANT: We use it as an opportunity to get everything we need from
-// the network
+7. Install and Cache
+
+-Open/create a cache named 'wittr-static-v1'
+-Add array of urls name urlsToCache to 'wittr-static-v1'
+
+Answer:
+
+var urlsToCache = [
+  '/',
+  'js/main.js',
+  'css/main.css',
+  'imgs/icon.png',
+  'https://fonts.gstatic.com/s/roboto/v15/2UX7WLTfW3W8TclTUvlFyQ.woff',
+  'https://fonts.gstatic.com/s/roboto/v15/d-6IYplOFocCacKzxwXSOD8E0i7KZn-EPnyo3HZu7kw.woff'
+];
+
+self.addEventListener('install', function(event) {
+  event.waitUntil(
+    // TODO: open a cache named 'wittr-static-v1'
+    // Add cache the urls from urlsToCache
+    caches.open('wittr-static-v1').then(function(cache) {
+      return cache.addAll([
+        '/',
+        'js/main.js',
+        'css/main.css',
+        'imgs/icon.png',
+        'https://fonts.gstatic.com/s/roboto/v15/2UX7WLTfW3W8TclTUvlFyQ.woff',
+        'https://fonts.gstatic.com/s/roboto/v15/d-6IYplOFocCacKzxwXSOD8E0i7KZn-EPnyo3HZu7kw.woff'
+      ]);
+    })
+  );
+});
+
+8. 
