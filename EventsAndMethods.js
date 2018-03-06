@@ -8,7 +8,7 @@ self.addEventListener(‘install’, function(event) {
 	//.....
 	);
 });
-
+// DEBUG:
 When should we store our stuff with Service Worker.  We can use a new install event. Add a listener for the install event. We pass it a promise. If and when the promise resolves, the browser knows the install is complete. If the promise rejects, it knows the install failed, and this service worker should be discarded
 
 Another way of putting it.....
