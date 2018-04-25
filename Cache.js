@@ -36,3 +36,12 @@ cache.match(request);
 caches.match(request);
 // Same as cache.match but tries to find a match in any cache, starting
 // with the oldest
+
+caches.delete(request);
+//to delete old caches
+//to remove specific entries from the cache
+
+cache.keys().then(function(requests) {
+  //
+})
+//returns a promise that gives us all the requests for entries in the cache

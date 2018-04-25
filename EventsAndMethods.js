@@ -64,3 +64,93 @@ self.addEventListener('fetch', function(event) {
       })
     );
 });
+
+5. ADDING UX TO THE UPDATE process
+
+navigator.serviceWorker.register('/sw.js').then(function(reg) {
+
+  //methods
+  reg.unregister();
+  reg.update();
+
+  //3 properties
+  reg.installing;
+  reg.waiting;
+  reg.active;
+
+  reg.addEventListener('updatefound', function() {
+    //reg.installing has changed
+  });
+});
+
+//Service worker objects themselves, you can look at their state
+
+var sw = reg.installing;
+console.log(sw.state); // ...logs "installing"
+// state can also be:
+// "installed"
+// "activating"
+// "activated"
+// "redundant"
+
+//The service worker fires an event statechange whenever the value of the state changes
+
+sw.addEventListener('statechange', function() {
+  //sw.state has changed
+});
+
+//Refers to the serviceWorker that controls this page
+navigator.serviceWorker.controller
+
+//Example - if there is no controller
+if (!navigator.serviceWorker.controller) {
+  //page didn't load using a service worker, so they loaded the content from the network
+}
+
+//otherwise we need to look at the registration like below:
+
+if (reg.waiting) {
+  //if there's a waiting worker there's an update ready!
+}
+
+if (reg.installing) {
+  //otherwise if there isn't a installing worker there's an update in progress but it might fail so we listen to the state changes to track it and if it reaches install state like below, we tell the user
+  reg.installing.addEventListener('statechange', function() {
+    if(this.state == 'installed') {
+      //there's an update ready!
+    }
+  });
+}
+
+//Otherwise we listen to the update found event
+
+reg.addEventListener('updatefound', function() {
+  reg.installing.addEventListener('statechange', function() {
+    if(this.state == 'installed') {
+      //there's an update ready!
+    }
+  })
+});
+
+//When you return for a service worker it returns a promise. That promise fulfills with a service work a registration object.
+//This object has properties and methods relating to the service worker registration.
+
+3 NEW COMPONENTS
+
+self.skipWaiting()
+
+
+// from a page:
+
+reg.installing.postMessage({foo: 'bar'});
+
+// in the service worker:
+
+self.addEventListener('message', function(event) {
+  event.data; // {foo: 'bar'}
+});
+
+
+navigator.serviceWorker.addEventListener('controllerchange', function() {
+  // navigator.serviceWorker.controller has changed
+});
